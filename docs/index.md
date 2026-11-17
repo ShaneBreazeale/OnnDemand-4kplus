@@ -17,7 +17,7 @@ Start with the [project overview and installation](../README.md).
 
 ## Legacy reference
 
-The [upstream README](../README.upstream.md) and the retained 2026 4K Pro
-build, installation, and recovery documents describe a separate `jarvis2`
-workflow. They are historical reference, not instructions for OnnDemand on
-the 4K Plus.
+The [upstream project](https://github.com/openensemble/onn-4k-pro-2026-unlock-root)
+and the retained 2026 4K Pro build, installation, and recovery documents describe
+a separate `jarvis2` workflow. They are historical reference, not instructions for
+OnnDemand on the 4K Plus.

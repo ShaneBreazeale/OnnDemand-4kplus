@@ -38,8 +38,7 @@ holders where required.
 The inherited content is identifiable in the upstream snapshot at commit
 `5b096b378d38d99235e8ca86c64bf214dc198e6a`. The paths below identify that content,
 including inherited portions of files later modified. Fully new replacement
-text and original later additions are covered as described above. The preserved
-`README.upstream.md` also retains its upstream terms.
+text and original later additions are covered as described above.
 
 ```
 .github/workflows/pages.yml

@@ -15,8 +15,8 @@ validation. A reboot clears temporary root and stops SSH.
 > **Based on** [openensemble/onn-4k-pro-2026-unlock-root](https://github.com/openensemble/onn-4k-pro-2026-unlock-root),
 > which retargets the 2026 onn 4K Pro unlock/root work to the 4K Plus. The
 > inherited upstream material carries no open-source license grant and is not
-> relicensed here; see [LICENSE_SCOPE.md](LICENSE_SCOPE.md), [THIRD_PARTY.md](THIRD_PARTY.md)
-> and [README.upstream.md](README.upstream.md).
+> relicensed here; see [LICENSE_SCOPE.md](LICENSE_SCOPE.md) and
+> [THIRD_PARTY.md](THIRD_PARTY.md).
 
 ## Why this approach?
 
@@ -151,8 +151,8 @@ connection: the onn still needs Wi-Fi or Ethernet for network access.
 
 This checkout includes code inherited from a separate **2026 onn. 4K Pro
 (`jarvis2`)** permanent-root project. Its installer and firmware pins do not
-apply to the 4K Plus. The original README is preserved in
-[README.upstream.md](README.upstream.md).
+apply to the 4K Plus. See the upstream project at
+[openensemble/onn-4k-pro-2026-unlock-root](https://github.com/openensemble/onn-4k-pro-2026-unlock-root).
 
 ## Documentation
 
