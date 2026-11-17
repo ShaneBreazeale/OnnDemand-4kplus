@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/images/banner.png" alt="OnnDemand-4kplus — on-demand temporary root + SSH for the onn. 4K Plus (Android 14)" width="100%">
+</p>
+
 # OnnDemand-4kplus
 
 **OnnDemand** provides on-demand temporary root and SSH access for the
