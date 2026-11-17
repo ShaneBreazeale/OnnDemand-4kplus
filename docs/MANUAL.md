@@ -1,5 +1,9 @@
 # Advanced command reference
 
+> **Legacy 4K Pro reference:** this document describes the separate 2026
+> `jarvis2` workflow. For OnnDemand on the 4K Plus, use the
+> [documentation index](index.md).
+
 For the normal guided walkthrough, run `python3 onn2026.py` from the repository
 folder. You do not need to enter the commands below when using the guide.
 

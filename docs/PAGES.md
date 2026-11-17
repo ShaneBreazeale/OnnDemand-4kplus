@@ -1,5 +1,9 @@
 # Project website
 
+> **Legacy 4K Pro reference:** this document describes the separate 2026
+> `jarvis2` workflow. For OnnDemand on the 4K Plus, use the
+> [documentation index](index.md).
+
 The GitHub Pages site lives in `site/` and is published at
 [2026 onn 4K Pro unlock and root](https://openensemble.github.io/onn-4k-pro-2026-unlock-root/).
 

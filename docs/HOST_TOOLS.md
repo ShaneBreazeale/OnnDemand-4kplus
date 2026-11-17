@@ -1,5 +1,9 @@
 # Compatible EROFS host tools
 
+> **Legacy 4K Pro reference:** this document describes the separate 2026
+> `jarvis2` workflow. For OnnDemand on the 4K Plus, use the
+> [documentation index](index.md).
+
 The DSU build uses `mkfs.erofs --tar=f` with LZ4HC compression and
 `fsck.erofs --extract=DIR --no-preserve`. **erofs-utils 1.7.1 is tested.** The guide
 checks these capabilities by building and extracting a tiny image before

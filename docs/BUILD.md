@@ -1,5 +1,9 @@
 # Build and validation
 
+> **Legacy 4K Pro reference:** this document describes the separate 2026
+> `jarvis2` workflow. For OnnDemand on the 4K Plus, use the
+> [documentation index](index.md).
+
 The firmware profile and input hashes are in `profile.json`. The two shipped
 ARM32 AVB helpers were built with Android NDK r28c, API 28. Rebuilding with
 NDK 28.2.13676358 reproduced both binary hashes. The DSU console is compiled

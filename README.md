@@ -134,14 +134,20 @@ command status, and stop/start with a stable host key. These tests reused an
 existing root loop over USB ADB forwarding. They did not validate a new exploit
 attempt, direct LAN access, or every firmware version.
 
-The root shell inherits the temporary-root loop's Android security context;
-Android framework commands have limitations. SSH does not provide an internet
+Temporary root reduces runtime security protections until reboot. Stopping SSH
+does not end temporary root. Some Android framework commands are unavailable
+in the root shell; use the normal authorized ADB shell for those operations. SSH does not provide an internet
 connection: the onn still needs Wi-Fi or Ethernet for network access.
 
 This checkout includes code inherited from a separate **2026 onn. 4K Pro
 (`jarvis2`)** permanent-root project. Its installer and firmware pins do not
 apply to the 4K Plus. The original README is preserved in
 [README.upstream.md](README.upstream.md).
+
+## Documentation
+
+See the [documentation index](docs/index.md) for device setup, temporary-root
+behavior, SSH, backup limits, and maintainer guides.
 
 ## Development and contributing
 

@@ -1,139 +1,142 @@
-# OnnDemand — SSH for onn. 4K Plus
+# SSH access
 
-`onndemand.py` starts a root SSH shell through the existing coffey
-command loop. It supports interactive terminals and remote shell commands.
-It does not implement SFTP or port forwarding, install a boot service, modify
-Android accounts, or change SELinux. Android framework commands have the same
-limitations as the temporary-root loop.
+OnnDemand starts an authenticated root SSH shell on the supported onn. 4K Plus
+firmware. It supports interactive terminals and remote shell commands. SFTP and
+SSH port forwarding are not implemented by the SSH helper.
 
-**Status:** Live validation on an onn 4K Plus (`coffey`, build 15051976) on
-2026-11-17 passed with the ARM64 helper: SSH sessions reported `uid=0(root)`
-in `u:r:kernel:s0`; interactive PTYs, binary stdout, separate stderr, and command
-exit codes worked. Key-only, password-only, and key OR password modes accepted
-the intended credentials and rejected wrong passwords or disabled methods.
-Stop/start preserved the device's host-key fingerprint. These tests reused an
-existing root loop and used device loopback through USB ADB forwarding; a fresh
-root exploit, direct LAN access, and the ARMv7 helper were not tested here.
-Both ARM and ARM64 helpers cross-compile successfully. The package now includes
-verified prebuilt helpers, a root payload rebuilt identically from vendored
-sources, and the root loader. Fresh installations do not depend on ignored local
-exploit artifacts. See [packaging and releases](RELEASING.md).
+Normal startup requests temporary root before starting SSH. The SSH helper does
+not independently change the device's security settings, but the preceding root
+operation reduces runtime protections. Read the
+[temporary root guide](ROOT_PATH.md#security-effects-and-persistence) before use.
 
-## Choose authentication
+## Start
+
+Use the exact authorized ADB serial or address shown by `adb devices -l`:
+
+```sh
+onndemand --target DEVICE_TARGET
+```
+
+OnnDemand prints the SSH host-key fingerprint and connection instructions.
+Check the fingerprint before accepting a new host identity. The default
+listener is device-local on port 2222.
+
+Use `--skip-root` only when a compatible temporary-root session is already
+running. Stop a running SSH server before changing its authentication settings.
+
+## Authentication
 
 | Mode | Accepted credentials |
 | --- | --- |
-| `--auth key` (default) | A reused or generated SSH key, or your supplied public key(s) |
-| `--auth password` | A password you enter at a hidden prompt |
-| `--auth both` | Either your selected SSH key OR your password |
+| `--auth key` (default) | The selected public key |
+| `--auth password` | A password entered at a hidden prompt |
+| `--auth both` | Either the selected key OR the password |
 
-`both` does not require two authentication factors. Empty passwords and
-unauthenticated access are refused. There is no shared/default password and
-there are no password command-line arguments. The tool confirms your password
-and stores only a randomly salted scrypt verifier (N=32768, r=8, p=1).
+`both` does not require two factors. Empty passwords and unauthenticated login
+are refused. Passwords have no command-line argument or shared default. The
+device stores a salted password verifier.
 
-Client keys are reused, not regenerated for each connection. Checkout state is
-under `work/`; installed state defaults to `~/.local/share/onndemand`. Override
-either with `ONNDEMAND_HOME`. Selection order:
+```sh
+onndemand --target DEVICE_TARGET --public-key ~/.ssh/id_ed25519.pub
+onndemand --target DEVICE_TARGET --auth password
+onndemand --target DEVICE_TARGET --auth both
+```
+
+### Key selection
+
+The tool chooses a client key in this order:
 
 1. Explicit `--public-key` files.
-2. The saved key at `ssh/client/id_ed25519` within the tool's state directory.
-3. An existing key pair in `~/.ssh`: `id_ed25519`, `id_ecdsa`, then `id_rsa`.
-4. Generate an Ed25519 pair once in that state directory and reuse it afterward.
+2. Its previously saved key pair.
+3. A standard key pair in `~/.ssh`: Ed25519, ECDSA, then RSA.
+4. A newly generated Ed25519 pair, saved for future use.
 
-Automatic discovery requires both the public and private file to exist. The
-tool reads only the public key; the private key stays on your computer. If you
-use an agent-only key, select its public file explicitly. Generated private keys
-have no passphrase, are mode 600 inside a mode 700 directory, and stay in ignored
-state storage. For a passphrase-protected or separately managed key, supply its public
-file. Do not delete the saved key while you still need to connect to a server
-configured with it. Password-only mode does not select or generate a key.
+Automatic discovery requires both public and private files. Agent-only keys can
+be selected by supplying their public file explicitly. Only the public key is
+sent to the device. Existing private keys are not copied or read by the setup
+tool.
 
-Public keys can also be supplied with `--public-key`; repeat it for multiple files.
-Supply `.pub` files, not private keys. Keys with authorized_keys restrictions
-are rejected rather than silently losing their restrictions.
+Generated private keys have no passphrase. They are saved with mode 600 in a
+mode 700 directory. To use a passphrase-protected or separately managed key,
+supply its public file. Keep the selected private key while you still need to
+connect. Password-only mode does not generate a key.
 
-## Start and connect
+Keys with authorized_keys restrictions are rejected rather than having their
+restrictions silently discarded. Repeat `--public-key` to select multiple files.
 
-You need Python 3 with scrypt support, authorized ADB, Bash, and an OpenSSH
-client. Automatic first-time key generation also needs `ssh-keygen`. Go is not
-needed for normal setup: verified ARM64 and ARMv7 SSH helpers are bundled.
-`--build-server` explicitly builds from source instead. Go dependencies are
-pinned in `native/rootssh/go.mod` and `go.sum`.
-The helper is built without libc for Linux ARM64 (the coffey kernel supports
-AArch64). `--arch arm` builds a 32-bit ARMv7 helper instead. To use an existing
-locally built helper, pass `--server-binary PATH` with the matching `--arch`.
-Bundled helpers are checked against package SHA256 pins before upload.
-The helper is separate from the existing kernel exploit binary.
+## Connect through ADB
 
-The following examples use `192.168.1.50:5555` as an example authorized ADB
-transport; replace it with your device's serial or address.
+Forward a local port through the authorized ADB connection:
 
 ```sh
-# Key-only (default): reuse a key, or generate one once
-python3 onndemand.py --target 192.168.1.50:5555
-
-# Choose a particular public key instead
-python3 onndemand.py --target 192.168.1.50:5555 --public-key ~/.ssh/id_ed25519.pub
-
-# Password-only: prompts twice without echoing the password
-python3 onndemand.py --target 192.168.1.50:5555 --auth password
-
-# Accept either your key or your password
-python3 onndemand.py --target 192.168.1.50:5555 \
-  --auth both --public-key ~/.ssh/id_ed25519.pub
+adb -s DEVICE_TARGET forward tcp:2222 tcp:2222
 ```
 
-Each start first runs `coffey-root.sh` unless `--skip-root` is supplied. The
-existing launcher prompts before a new root attempt; `--yes` forwards its
-noninteractive confirmation. Existing temporary root can be reused. A live
-SSH server is not automatically restarted or reconfigured: stop it first.
-
-By default the server listens only on device loopback, port 2222. Forward it
-through your authorized ADB connection:
+Then use the SSH command printed by OnnDemand, including its selected identity.
+If you supplied a public key explicitly, select the matching private key in
+your SSH client:
 
 ```sh
-adb -s 192.168.1.50:5555 forward tcp:2222 tcp:2222
-# Use the SSH command printed by the tool, including its selected identity:
-ssh -i work/ssh/client/id_ed25519 -p 2222 root@127.0.0.1
+ssh -i PATH_TO_SELECTED_PRIVATE_KEY -p 2222 root@127.0.0.1
 ```
 
-For direct access on your LAN, add `--listen 0.0.0.0` when starting the server,
-then connect with `ssh -p 2222 root@192.168.1.50`. You can choose another port
-with `--port`. Root SSH exposes full control of the device to authenticated
-clients; use a trusted network.
+If port 2222 is already in use on the host, choose another local port in the
+ADB forward and use that port in the SSH client. The onn needs its own Wi-Fi
+or Ethernet connection for internet access; ADB forwarding does not provide one.
 
-The server generates a unique Ed25519 host key on the device and prints its
-SHA256 fingerprint. Compare that fingerprint with your SSH client's first
-connection prompt. Do not disable host-key verification.
+## Direct LAN access
 
-## Stop, inspect, and restart
+Add `--listen 0.0.0.0` to allow connections through the device's network
+interfaces. Connect to its current LAN address using the printed port. Use
+`--port` to select another port.
+
+Root SSH provides full administrative control to authenticated clients. Use a
+trusted network. Direct LAN operation was not part of the recorded live tests.
+
+## Status, stop, and reboot
 
 ```sh
-python3 onndemand.py status --target 192.168.1.50:5555
-python3 onndemand.py stop --target 192.168.1.50:5555
+onndemand status --target DEVICE_TARGET
+onndemand stop --target DEVICE_TARGET
 ```
 
-These commands use the root loop, so they require it to be alive. Stop checks
-that the PID belongs to this helper before sending a termination signal.
+These commands require the temporary-root session to remain available. Stopping
+SSH does not undo temporary root. Reboot to end the rooted session.
 
-A reboot clears temporary root and stops SSH. The server binary, authentication
-configuration, and host identity remain under `/data/local/onn-rootssh`, owned
-by root in a directory with mode 700. There is no automatic restart. Run start
-again to regain temporary root and configure authentication; password modes ask
-for the password again. The host key is reused, so restarting preserves the
-device's SSH identity. A stale PID from a reboot is discarded only after it is
-shown not to refer to a running process; a PID reused by another process stops
-installation for inspection.
+The server files, authentication settings, and device host key remain under
+`/data/local/onn-rootssh`. There is no automatic restart after a reboot. Starting
+again reuses the host identity; password modes ask for a password again.
 
-## Validation
+Host-side keys are under `ssh/client/` in the tool's state directory. Installed
+state defaults to `~/.local/share/onndemand`; checkout state uses `work/`.
+`ONNDEMAND_HOME` overrides that location. These are private files, not support
+attachments.
 
-```sh
-python3 -m unittest discover -s tests -p test_coffey_ssh.py
-cd native/rootssh
-go test ./...
-```
+## Troubleshooting
 
-Go tests exercise real local SSH handshakes for all authentication modes,
-rejected credentials, command exit status, binary output, PTYs, and stable host
-identity. Python tests cover credential preparation and deployment guards.
+| Symptom | Check |
+| --- | --- |
+| ADB is unauthorized or offline | Accept the TV prompt and confirm the intended transport with `adb devices -l`. |
+| SSH connection is refused | Check server status, listener address, port, and ADB forwarding. |
+| Authentication fails | Use the configured method and matching private key; stop before reconfiguring authentication. |
+| Host-key fingerprint changes | Verify the device and configuration before accepting the change. |
+| A root or PID check refuses to continue | Inspect the reported state; do not bypass the guard. |
+| A command times out | It may still be running. Inspect it before retrying or removing locks. |
+| Hostnames do not resolve | Confirm that the onn has an active network connection. |
+| An Android app-management command fails | Use the normal authorized ADB shell; some framework operations are unavailable in the root shell. |
+
+## Tested scope
+
+Live tests on one `coffey` unit, firmware build 15051976, verified root shell
+access, interactive terminals, authentication modes, rejected credentials,
+binary stdout, separate stderr, command exit status, and stop/start with a
+stable host identity. They reused an existing temporary-root session through
+USB ADB forwarding.
+
+The default ARM64 helper was tested on the device. `--arch arm` selects the
+bundled ARMv7 SSH helper, which was not part of those live tests. Normal setup
+uses verified bundled helpers. `--build-server` explicitly builds the selected
+helper from source; `--server-binary PATH` supplies a local override.
+
+See [compatibility](COFFEY.md), [backup and recovery](RESTORE.md), and
+[builds and releases](RELEASING.md) for their separate limitations.

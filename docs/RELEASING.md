@@ -12,8 +12,8 @@ onndemand --help
 
 For development, `uv run onndemand --help` uses an editable project environment.
 `python3 onndemand.py` and the older `tools/coffey-ssh.py` launcher remain
-available in a checkout. Installed tools use bundled package files, never paths
-under an ignored `work/exploit` directory.
+available in a checkout. Installed tools use bundled package files and do not require local development
+artifacts.
 
 The runtime needs Python 3.10+, Bash, ADB, and an SSH client. The package includes
 verified ARM64 and ARMv7 SSH helpers and the coffey root payload; Go and the NDK
@@ -41,8 +41,8 @@ not a separate signing authority: install distributions from a source you trust.
 
 ## Native source and builds
 
-`vendor/coffey` contains the required local coffey port, target table, upstream
-revision, modification notice, and Apache-2.0 license. The root loader is tracked
+`vendor/coffey` contains the attributed payload source, upstream revision,
+modification notice, and Apache-2.0 license. The loader is tracked
 at `src/onndemand/assets/payload/rootloop.sh`. Neither depends on ignored work
 files. `native/rootssh` holds the SSH server and locked Go module checksums.
 
@@ -57,9 +57,9 @@ python3 tools/build_release_assets.py --check
 The builder uses fixed target flags, disables Go VCS/path/build-ID embedding, and
 writes the compiler revisions, source hashes, binary hashes, and sizes into
 `src/onndemand/assets/manifest.json`. Review changes to both source and pins.
-Source edits require rebuilding before release. Two builds using the pinned
-local toolchains produced the same bundled assets. The vendored C payload also
-matched the previously tested local `build-cur` binary byte-for-byte.
+Source edits require rebuilding before release. Repeated builds using the pinned
+local toolchains reproduced the bundled assets. The bundled root payload
+matched the previously tested binary byte-for-byte.
 Cross-host byte identity between the macOS and Linux NDK toolchains has not
 been measured here.
 
@@ -96,12 +96,19 @@ python3 tools/check_distribution.py dist/*.whl --tag v1.2.3
 
 Install the wheel or source distribution in a clean environment outside this
 checkout and run `onndemand --version` and `onndemand --help`. Test a Git install
-from the intended release tag as well. An isolated local `v0.1.0` fixture was
-built, checked, and installed via uv from Git; the installed CLI reported exactly
-`0.1.0`. That fixture did not create a tag in the real project or publish anything.
+from the intended release tag as well. Confirm that the installed CLI reports
+that tag's package version without requiring a checkout or Git at runtime.
 
 The release workflow checks tracked asset pins, runs packaging/setup tests,
 builds the source distribution and wheel, validates a tag's version, installs
 outside the checkout, and uploads distribution artifacts with `SHA256SUMS`.
 It does not automatically publish to PyPI or create a GitHub Release. Review
 artifacts and checks before publishing a release.
+
+## Documentation scope
+
+User documentation covers supported behavior, setup, measured compatibility,
+security effects, and troubleshooting. Keep research journals, development
+tuning notes, device identifiers, and personal backup records out of tracked
+documentation. Preserve required source attribution, licenses, and modification
+notices. Changes to current documentation do not remove older Git history.

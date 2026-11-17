@@ -1,5 +1,9 @@
 # Measured results — November 10, 2026
 
+> **Legacy 4K Pro reference:** this document describes the separate 2026
+> `jarvis2` workflow. For OnnDemand on the 4K Plus, use the
+> [documentation index](index.md).
+
 One 2026 jarvis2 on the exact Android 14 profile in `profile.json` was tested.
 
 | Check | Result |

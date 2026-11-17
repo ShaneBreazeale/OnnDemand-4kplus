@@ -1,5 +1,9 @@
 # Recovery and failure handling
 
+> **Legacy 4K Pro reference:** this document describes the separate 2026
+> `jarvis2` workflow. For OnnDemand on the 4K Plus, use the
+> [documentation index](index.md).
+
 Unlocking the bootloader requires a factory reset in Android Recovery on the TV.
 It erases all user apps, accounts, settings and other local data. After the unlock
 reboot, follow recovery's on-screen controls to select the factory reset and
