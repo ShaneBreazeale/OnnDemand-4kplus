@@ -8,6 +8,22 @@ backups, and housekeeping without installing a permanent root boot service.
 (`URO4.260304.011.B1`). Other devices and firmware versions need separate
 validation. A reboot clears temporary root and stops SSH.
 
+## Why this approach?
+
+OnnDemand is intended for maintenance and customization while keeping the
+device's original boot configuration in place. The workflow does not unlock
+the bootloader, flash replacement boot images, or require a factory reset.
+
+Keeping the stock configuration is a deliberate choice: the aim is to retain
+normal device behavior and streaming compatibility while providing
+administrative access when you need it. Access is temporary, so a reboot ends
+the root session and stops SSH. Files, settings, and app changes you choose to
+make can still persist.
+
+Streaming behavior also depends on the firmware, app, and service. Retaining
+the stock boot configuration is not a guarantee of playback quality or app
+compatibility; check the services you rely on after making changes.
+
 ## Features
 
 - Start root SSH through the existing temporary-root command loop.
