@@ -22,10 +22,10 @@ the device generates its own persistent SSH host identity.
 
 ## Installation
 
-Once published, replace `REPOSITORY_URL` with this repository's GitHub clone URL:
+Clone the repository with an account that has access to this private repo:
 
 ```sh
-git clone REPOSITORY_URL OnnDemand-4kplus
+git clone https://github.com/ShaneBreazeale/OnnDemand-4kplus.git
 cd OnnDemand-4kplus
 ```
 
