@@ -1,5 +1,10 @@
 # Inputs and source references
 
+Original OnnDemand contributions are licensed under Apache-2.0. See
+[LICENSE](LICENSE), [NOTICE](NOTICE), and [LICENSE_SCOPE.md](LICENSE_SCOPE.md).
+Third-party components keep their existing terms. The inherited 4K Pro material
+described below is excluded from the original OnnDemand license grant.
+
 Firmware is downloaded from the pinned Google OTA URL in `profile.json` and
 is not included in Git. Magisk is downloaded from its official GitHub release;
 its upstream license is [GPL-3.0](https://github.com/topjohnwu/Magisk/blob/master/LICENSE).
@@ -14,8 +19,10 @@ build/runtime requirements and are not redistributed here.
 `tools/extract_full_ota.py` is our small standard-library full-OTA extractor.
 Its protobuf fields follow AOSP's
 [update metadata schema](https://android.googlesource.com/platform/system/update_engine/+/refs/heads/android14-release/update_metadata.proto).
-The local workflow, helper sources and tests were developed for this project.
-No open-source license is granted for those files.
+The upstream 4K Pro project's original workflow, helper sources, and tests carry
+no open-source license grant. That inherited material is not relicensed here;
+its original rights and restrictions remain in place. See the legacy scope
+inventory in [LICENSE_SCOPE.md](LICENSE_SCOPE.md).
 
 `tools/extract_dsu_ota.py` applies the same verified full-payload extraction to
 the larger system/product partitions. The EROFS metadata reader follows the

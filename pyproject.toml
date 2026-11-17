@@ -7,6 +7,8 @@ name = "onndemand-4kplus"
 dynamic = ["version"]
 description = "On-demand temporary root and SSH for onn. 4K Plus"
 readme = "README.md"
+license = "Apache-2.0 AND BSD-3-Clause AND MIT"
+license-files = ["LICENSE", "NOTICE", "LICENSE_SCOPE.md", "THIRD_PARTY.md", "vendor/coffey/LICENSE", "vendor/coffey/NOTICE.md", "native/rootssh/licenses/*"]
 requires-python = ">=3.10"
 dependencies = []
 

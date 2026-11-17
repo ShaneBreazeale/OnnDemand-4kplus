@@ -165,6 +165,9 @@ device reports out of issues and pull requests.
 
 ## License
 
-See [THIRD_PARTY.md](THIRD_PARTY.md) for provenance and dependency licenses.
-The existing project does not grant an open-source license for its original
-workflow and helper sources. Public availability alone does not change that.
+Original OnnDemand contributions are licensed under [Apache-2.0](LICENSE).
+Third-party components retain their existing licenses and notices.
+
+Inherited 4K Pro material is excluded from this grant; its original rights and
+restrictions remain in place. See [LICENSE_SCOPE.md](LICENSE_SCOPE.md),
+[NOTICE](NOTICE), and [THIRD_PARTY.md](THIRD_PARTY.md) for the scope and attribution.

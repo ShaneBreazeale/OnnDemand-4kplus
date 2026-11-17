@@ -1,0 +1,11 @@
+OnnDemand-4kplus
+Copyright 2026 ShaneBreazeale and OnnDemand contributors.
+
+Original OnnDemand contributions are licensed under the Apache License,
+Version 2.0. The grant does not relicense third-party or inherited materials.
+See LICENSE_SCOPE.md for the scope of the grant and legacy exclusions.
+
+The bundled coffey payload retains its upstream Apache-2.0 license and
+modification notice. The bundled SSH helper contains third-party components
+with their own preserved licenses. See THIRD_PARTY.md, vendor/coffey/LICENSE,
+vendor/coffey/NOTICE.md, and native/rootssh/licenses/.

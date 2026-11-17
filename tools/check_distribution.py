@@ -14,6 +14,14 @@ def check(path, expected=None):
         names = archive.namelist()
         metadata_name = next(name for name in names if name.endswith('.dist-info/METADATA'))
         metadata = email.message_from_bytes(archive.read(metadata_name))
+        if metadata['License-Expression'] != 'Apache-2.0 AND BSD-3-Clause AND MIT':
+            raise ValueError('Distribution license expression is missing or incorrect')
+        license_root = metadata_name.rsplit('/', 1)[0] + '/licenses/'
+        for name in ('LICENSE', 'NOTICE', 'LICENSE_SCOPE.md', 'THIRD_PARTY.md',
+                     'vendor/coffey/LICENSE', 'vendor/coffey/NOTICE.md',
+                     'native/rootssh/licenses/gliderlabs-ssh-LICENSE'):
+            if license_root + name not in names:
+                raise ValueError('Missing distribution license notice: ' + name)
         if expected and metadata['Version'] != expected:
             raise ValueError('Wheel version does not match release tag')
         manifest = json.loads(archive.read('onndemand/assets/manifest.json'))
