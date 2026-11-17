@@ -12,6 +12,12 @@ backups, and housekeeping without installing a permanent root boot service.
 (`URO4.260304.011.B1`). Other devices and firmware versions need separate
 validation. A reboot clears temporary root and stops SSH.
 
+> **Based on** [openensemble/onn-4k-pro-2026-unlock-root](https://github.com/openensemble/onn-4k-pro-2026-unlock-root),
+> which retargets the 2026 onn 4K Pro unlock/root work to the 4K Plus. The
+> inherited upstream material carries no open-source license grant and is not
+> relicensed here; see [LICENSE_SCOPE.md](LICENSE_SCOPE.md), [THIRD_PARTY.md](THIRD_PARTY.md)
+> and [README.upstream.md](README.upstream.md).
+
 ## Why this approach?
 
 OnnDemand is intended for maintenance and customization while keeping the
