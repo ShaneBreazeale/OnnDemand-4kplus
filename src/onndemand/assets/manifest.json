@@ -1,0 +1,59 @@
+{
+  "device": "coffey",
+  "files": {
+    "payload/coffey-root-arm64": {
+      "bytes": 2225608,
+      "sha256": "0ecfb84328d8827bb29119a687a67822d581ff98073b7edaa50c402cd330e021"
+    },
+    "payload/rootloop.sh": {
+      "bytes": 926,
+      "sha256": "1166d78d664f92962dac8a932439e824cc0daeffbf6f4747dfc4a0e2e853cafe"
+    },
+    "ssh/rootssh-arm": {
+      "bytes": 5636220,
+      "sha256": "c241b37d636532ad404a6bc8cb9ec5979b720af348eac3dcef9ff0366c848406"
+    },
+    "ssh/rootssh-arm64": {
+      "bytes": 5308540,
+      "sha256": "345be93c8e690eeeb8a43d88e0d4817f24c99b1ec4234679bf9c06da7c6edb88"
+    }
+  },
+  "firmware_incremental": "15051976",
+  "schema": 1,
+  "sources": {
+    "native/rootssh/go.mod": "92e15d78730e3c1c4c28a0efa3462bd2f72d59d2c32d400cceb1f4f360aa9f51",
+    "native/rootssh/go.sum": "8f21663bdcd51d74b62f2ca8e4ea49d80a41092e3620ae3757f5ce265e0e4aa6",
+    "native/rootssh/licenses/creack-pty-LICENSE": "a2a1cea59d9c2d71908082f516f86bb560abf857646ecf69d70c121ead14aef4",
+    "native/rootssh/licenses/gliderlabs-ssh-LICENSE": "ac32cbd9c0f04259c839d9ae01f039c1ee777a8add1a89fdafc6006237f66650",
+    "native/rootssh/licenses/go-crypto-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "native/rootssh/licenses/go-crypto-PATENTS": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+    "native/rootssh/licenses/go-runtime-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "native/rootssh/licenses/go-shlex-LICENSE": "8ff2b7cdb75693173319e65a691da7b9a065cf3fd643264fe8b6ec9e362627f4",
+    "native/rootssh/licenses/go-sys-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "native/rootssh/licenses/go-sys-PATENTS": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+    "native/rootssh/main.go": "fb91f13eabd7d375a71216754ad6be35d55c320a64929b2a984be7c8da7c2140",
+    "native/rootssh/main_test.go": "a3d290d1306d8adc448226e2adae2378c70c77fc9b6f070258cb57bcfece5001",
+    "src/onndemand/assets/payload/rootloop.sh": "1166d78d664f92962dac8a932439e824cc0daeffbf6f4747dfc4a0e2e853cafe",
+    "tools/build_release_assets.py": "fe7143f143b7e8f5e11275457faeade94f97cab1f0cc16220973de3cb2ee7621",
+    "vendor/coffey/LICENSE": "a0d03407252c728c556b3188258aa3a37ecf82797f614da4aac88634b1743afe",
+    "vendor/coffey/NOTICE.md": "d9e2f3c902ee44a85d8ddbc6557c2dcbc56506fbbf2aa097758886dddfa6083a",
+    "vendor/coffey/src/common.h": "d0fededcdd68e046c6548b2bcf948ae8dce192ec0ca2a7cc07e516bffd5920e2",
+    "vendor/coffey/src/env_defaults.h": "d67afc5923b2bfc6f11e20db376a46e27e1eca6ec1642b0ab04f5421c7911a81",
+    "vendor/coffey/src/kernelsnitch/futex_hash.h": "81b542e5e19a8f47baba0e7635467a2a28b59ecee67e2ae621d22317db8d6de5",
+    "vendor/coffey/src/kernelsnitch/kernelsnitch.h": "c749c6b4f1a9fee49f67ed52d3effd633ad18d230bd95f3aa92d92608a20378f",
+    "vendor/coffey/src/kernelsnitch/timeutils.h": "d2be96f2f28e3d0644645978d84701321d573fcc3b8cf5779ecbe45c74c5a935",
+    "vendor/coffey/src/kernelsnitch/utils.h": "7e557db5eb89c0f0de8e366528fe3d1fc7697f69e6bcaa312586a42a51cd4263",
+    "vendor/coffey/src/launcher.c": "a03220fc4322e56bfc9ed33195126978c12a64ec56e8d985d451586800439bf6",
+    "vendor/coffey/src/main.c": "0d03937f9984e0e0592f32f428509ce848f4eee73a606c196713a4ddc1b67052",
+    "vendor/coffey/src/offset.h": "d2a4360cb682b2e63b28f368c6d6fd3359c8c9f25c21100ddc9b7c6e2c3613a6",
+    "vendor/coffey/src/slide.c": "a3fbf53089c12694fcc2a28c88e7bc9e8e121b517c910067707806a057021bde",
+    "vendor/coffey/src/sysctl.c": "9ad7ec36f8d8db58f06ad762dd5da608d73543a777943a2cee19fba75d7ac2e7",
+    "vendor/coffey/src/targets/coffey/target.h": "e9ff8589c0f1aca5ad9ca1a6d423e6ae949dfb6156936510f0a9905b28bcaac7",
+    "vendor/coffey/src/util.c": "358dc40d1433a565a6c0fce7b88876bf840f4ec0099833a330082b29232dbd85"
+  },
+  "toolchains": {
+    "android_ndk": "28.2.13676358",
+    "go": "go1.27.4"
+  },
+  "upstream_payload_revision": "33541d1a852a926f782602aa34d79cfbffbd4bb6"
+}

@@ -20,3 +20,14 @@ AGENTS.md
 *.elf
 adbkey*
 onn26_binding.h
+backups/
+
+# Python distributions, generated release version, and macOS metadata
+/dist/
+/build/
+*.egg-info/
+src/onndemand/_version.py
+.DS_Store
+
+# Local session transcript, not project source
+/see repo, we need to gain root acess first we need

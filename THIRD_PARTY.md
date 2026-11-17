@@ -33,3 +33,23 @@ The single-use DSU review follows the shipping first-stage init and AOSP
 [DSU architecture](https://source.android.com/docs/core/ota/dynamic-system-updates).
 The update-preference command uses Android's
 [OTA_DISABLE_AUTOMATIC_UPDATE setting](https://android.googlesource.com/platform/frameworks/base/+/android-14.0.0_r1/core/java/android/provider/Settings.java).
+
+The optional root SSH helper in `native/rootssh` uses
+[gliderlabs/ssh](https://github.com/gliderlabs/ssh),
+[creack/pty](https://github.com/creack/pty),
+[Go x/crypto](https://go.googlesource.com/crypto),
+[Go x/sys](https://go.googlesource.com/sys), and
+[go-shlex](https://github.com/anmitsu/go-shlex). Exact versions and module
+checksums are recorded in its `go.mod` and `go.sum`. Dependency license notices
+are preserved in `native/rootssh/licenses`; include those notices when
+redistributing a compiled SSH helper. Generated helpers and device credentials
+are normally kept separate; the verified release helpers under
+`src/onndemand/assets/ssh` are intentionally bundled in Git and distributions.
+Device credentials remain excluded. See `docs/SSH.md` for usage and validation limits.
+
+The coffey root payload source is vendored under `vendor/coffey`, derived from
+GhostLock-H80GT revision `33541d1a852a926f782602aa34d79cfbffbd4bb6` with the local
+coffey modifications described in its NOTICE.md. Its Apache-2.0 license and
+notices accompany the bundled payload. The package manifest pins source and
+binary hashes and records Android NDK 28.2.13676358 and Go 1.27.4 as the native
+release toolchains. See `docs/RELEASING.md` for rebuild and verification steps.

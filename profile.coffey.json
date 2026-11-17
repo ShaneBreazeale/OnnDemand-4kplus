@@ -1,0 +1,72 @@
+{
+  "_notes": [
+    "Reference profile for the 2025 onn 4K Plus (coffey), build URO4.260304.011.B1 / 15051976.",
+    "This file is for read-only reconnaissance only and is not accepted by the installer.",
+    "Firmware, init_boot, and DSU partition pins were read from the official full OTA payload metadata.",
+    "Serial prefix CUSA and ABI armeabi-v7a confirmed on one physical unit (2026-11-16); bootloader 01.01.260305.112513 read twice on that unit; slots still unconfirmed.",
+    "Do not copy these values into profile.json or use them for an unlock or firmware write before the device checks pass."
+  ],
+  "id": "coffey-15051976",
+  "device": "coffey",
+  "fingerprint": "onn/coffey/coffey:14/URO4.260304.011.B1/15051976:user/release-keys",
+  "bootloader": "01.01.260305.112513",
+  "serial_regex": "CUSA[A-Za-z0-9]+",
+  "abi": "armeabi-v7a",
+  "sdk": 34,
+  "security_patch": "2026-03-01",
+  "init_boot_size": 8388608,
+  "init_boot_sha256": "bc2112c2531acbd375ed67eb31fcbaa7412232fce777e49ba025d2b34d30dc61",
+  "root_stock_sha1": "2be7aeb00178cd2ad1dd291d2a30f7908359af97",
+  "slots": {},
+  "magisk_version": "30.7",
+  "magisk_apk_sha256": "e0d32d2123532860f97123d927b1bb86c4e08e6fd8a48bfc6b5bee0afae9ebd5",
+  "magisk_url": "https://github.com/topjohnwu/Magisk/releases/download/v30.7/Magisk-v30.7.apk",
+  "ota_url": "https://android.googleapis.com/packages/ota-api/package/db1ba0cd0b332be68b0488095966feeb6b39305a.zip",
+  "ota_sha256": "ec755bd03500da81b0f509b393fa26451050c9711c689749cec2ffa49395b1a7",
+  "ota_size": 906283326,
+  "dsu_partitions": {
+    "odm": {
+      "size": 507904,
+      "sha256": "a7a2c9448248e4ea6c423e61a0f4d9c62af007f7f4777acff5df3c89e28d7e44"
+    },
+    "product": {
+      "size": 543825920,
+      "sha256": "35f3d682d8eb4a566e18aa3326650ff7dacaefa908e536998ce70fcefdcc64cd"
+    },
+    "system": {
+      "size": 473403392,
+      "sha256": "25f04a5d48eab9f6fefd5645e5096288d0be3f1b1f3291ad2edb2d5b5a1f7d2a"
+    },
+    "system_ext": {
+      "size": 96186368,
+      "sha256": "00a3019b5b0e426e173abf07662916193cf53ad7a8a423fc2fe89f45d8bc958b"
+    },
+    "vendor": {
+      "size": 83812352,
+      "sha256": "78836a535f77cf95a9736057d9c61167a4c230620c3c3fcce539d0ba7d4ab26f"
+    }
+  },
+  "avbtool": {
+    "url": "https://android.googlesource.com/platform/external/avb/+/android-14.0.0_r1/avbtool.py?format=TEXT",
+    "sha256": "1f1fddd2764eba76dc659415406062251edcf2eb6b4e83b0f01d0224cd631281"
+  },
+  "ndk_version": "28.2.13676358",
+  "reference_only": true,
+  "install_supported": false,
+  "hardware_verified": false,
+  "vbmeta_digest": "de5ef16ba9a1574da6ec1a6b3a7e69519aa69aace546eb3d510674225fa28c90",
+  "vbmeta_hash_alg": "sha256",
+  "vbmeta_size": 17152,
+  "vbmeta_chain": [
+    "vbmeta",
+    "boot",
+    "oem",
+    "vbmeta_system"
+  ],
+  "init_boot_avb": {
+    "descriptor_in": "vbmeta",
+    "image_size": 1851392,
+    "salt": "28363a5dad8f934c2f5785046c49dd5fcfc825e94551e3eaab7322c0a30aa172",
+    "digest": "2aca7fd53406917abcedeb630356a605fe23f63f8809e8b7a93a2883ad136770"
+  }
+}

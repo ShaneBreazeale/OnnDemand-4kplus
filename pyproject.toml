@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling>=1.27,<2", "hatch-vcs>=0.5,<1"]
+build-backend = "hatchling.build"
+
+[project]
+name = "onndemand-4kplus"
+dynamic = ["version"]
+description = "On-demand temporary root and SSH for onn. 4K Plus"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+onndemand = "onndemand.entry:main"
+
+[tool.hatch.version]
+source = "vcs"
+tag-pattern = '^v(?P<version>\d+\.\d+\.\d+(?:(?:a|b|rc)\d+)?)$'
+fallback-version = "0.0.0.dev0"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/onndemand/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/onndemand"]
+artifacts = ["src/onndemand/assets/**"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/onndemand", "vendor/coffey", "native/rootssh", "tools/build_release_assets.py", "tools/check_distribution.py", "pyproject.toml", "uv.lock", "README.md", "THIRD_PARTY.md", "docs/SSH.md", "docs/RELEASING.md", "tests/test_distribution.py"]
+artifacts = ["src/onndemand/assets/**"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"native/rootssh" = "onndemand/assets/ssh-source"
+"vendor/coffey/LICENSE" = "onndemand/assets/licenses/coffey-APACHE-2.0"
+"vendor/coffey/NOTICE.md" = "onndemand/assets/licenses/coffey-NOTICE.md"
+"native/rootssh/licenses" = "onndemand/assets/licenses/ssh"

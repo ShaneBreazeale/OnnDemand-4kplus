@@ -1,0 +1,49 @@
+name: Build and validate OnnDemand release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+  pull_request:
+    paths: ["src/**", "vendor/**", "native/rootssh/**", "pyproject.toml", "uv.lock", "tools/build_release_assets.py", "tools/check_distribution.py", ".github/workflows/release.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  distributions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
+        with:
+          version: '0.10.10'
+      - name: Check bundled assets and run host tests
+        run: |
+          uv run --python 3.13 --no-project python tools/build_release_assets.py --check
+          uv run --python 3.13 --no-project python -m unittest discover -s tests -p test_coffey_ssh.py
+          uv run --python 3.13 --no-project python -m unittest discover -s tests -p test_coffey_commands.py
+          uv run --python 3.13 --no-project python -m unittest discover -s tests -p test_distribution.py
+      - name: Build distributions
+        run: uv build
+      - name: Validate version against release tag
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: uv run --no-project python tools/check_distribution.py dist/*.whl --tag "$RELEASE_TAG"
+      - name: Validate wheel and install outside checkout
+        run: |
+          uv run --no-project python tools/check_distribution.py dist/*.whl
+          uv tool install --python 3.13 dist/*.whl
+          cd /tmp
+          "$HOME/.local/bin/onndemand" --version
+          "$HOME/.local/bin/onndemand" --help
+      - name: Create distribution checksums
+        run: cd dist && sha256sum *.whl *.tar.gz > SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: onndemand-distributions
+          path: dist/

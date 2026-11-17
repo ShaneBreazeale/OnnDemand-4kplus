@@ -71,6 +71,10 @@ class FakeADB:
             response = (0, "2000\n", "")
         elif query == ("getenforce",):
             response = (0, "Enforcing\n", "")
+        elif query == ("uname", "-r"):
+            response = (0, "5.15.180-android14-8-g1234567890ab\n", "")
+        elif query == ("uname", "-v"):
+            response = (0, "#1 SMP PREEMPT Thu Mar 5 2026\n", "")
         elif query == ("cat", "/proc/partitions"):
             response = (0, "179 22 8192 mmcblk0p22\n179 23 8192 mmcblk0p23\n", "") if self.readable else (
                 1, "", "Permission denied " + SERIAL + " " + BOOT + " " + TARGET)

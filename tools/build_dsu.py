@@ -222,7 +222,8 @@ def build(args):
              "--do_not_generate_fec", "--salt", "9c36d1cb9303ad93fda0f340d31b24ccf8892ee3a1d9198bb6b94acf0772d625",
              "--prop", "com.android.build.system.os_version:14", "--prop",
              "com.android.build.system.fingerprint:" + o.PROFILE["fingerprint"], "--prop",
-             "com.android.build.system.security_patch:2026-06-01"], out / "avb-footer.log",
+             "com.android.build.system.security_patch:" +
+             o.PROFILE.get("security_patch", "2026-06-01")], out / "avb-footer.log",
              "Adding Android verification data")
     command([*avb, "verify_image", "--image", image], out / "avb-verify.log",
             "Verifying the rebuilt Android image")
